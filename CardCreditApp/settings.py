@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-9-#**=$$xn8^l+y*yd53x0kdu#2j)8)u5ya%)%^#e!_ay(#^%l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['churn-card-app.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','churn-card-app.herokuapp.com']
 
 
 # Application definition
