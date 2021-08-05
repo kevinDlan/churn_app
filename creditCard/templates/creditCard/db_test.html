@@ -1,10 +1,9 @@
 {% extends '../layouts/layout.html' %}
 {% block title %}Machine Leaning Scoring App | db test{% endblock title %}
 {% block main %}
-    <section id="contact">
         <div class="container-lg bg-light p-4 rounded-3 col-9 col-lg-4 position-absolute top-50 start-50 translate-middle">
             <div class="text-center">
-                <h2 id="title">Credit Card</h2>
+                <h2 id="title">Credit Card Churn</h2>
                 <p class="lead">Veuillez entrer le nombre de client</p>
             </div>
             <div class="row justify-content-center">
@@ -14,7 +13,7 @@
                     {% csrf_token %}
                         <div class="col-md-8">
                             {% comment %} <label for="client_val">Nombre client</label>    {% endcomment %}
-                            <input name = "nbre_client" type="number" class="form-control" id="client" placeholder="nombre client">
+                            <input name = "nbre_client" type="number" min="10" class="form-control" id="client" placeholder="nombre client">
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-secondary mb-3">Valider</button>
@@ -23,5 +22,4 @@
                 </div>
             </div>
         </div>
-    </section>
 {% endblock main %}

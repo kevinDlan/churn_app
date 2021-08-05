@@ -1,23 +1,31 @@
 {% extends '../layouts/layout.html' %}
 {% block title %}Machine Leaning Scoring App{% endblock title %}
 {% block main %}
-    <section id="contact">
-        <div class="container-lg bg-light col-md-6 mt-4">
-            <div class="text-center">
-                <h1 id="title">Scoring App</h1>
-                <div class="mt-4">
-                  <p align="justify" class="lead">
-                    Scoring App est une application qui permet de determiner si un client va se 
-                    désabonné du service de carte de crédit en fonction des ces activité du mois précédent.
-                  </p>
+    <div class="container-fluid py-5 mt-5">
+        <div class="bg-light col-md-5 p-4 ms-5">
+            <div class="text-start">
+                <h1 id="title">Credit Card Churn</h1>
+                <div class="text-muted">
+                    <ul>
+                        <li><span class="fw-b">Credit Card Churn est une application qui permet de determiner si un client va se 
+                        désabonné du service de carte de crédit en fonction des ces activité du mois précédent.</span>
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul>
+                      
+                  
                 </div>
             </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <!-- App form -->
-                    
+            <div class="row">
+                <div class="col-md-4">
+                 <a class="btn btn-secondary btn-outline" href="/single_test">Prédiction Unique</a>
+                </div>
+                <div class="col-md-5">
+                 <a class="btn btn-secondary btn-outline" href="/db_test">Prédiction Multiple</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 {% endblock main %}
