@@ -4,9 +4,9 @@
 {% endblock title %}
 {% block main %}
         <div class="container-lg bg-light mt-4">
-            <div class="text-center">
-                <h2 id="title">Credit Card</h2>
-                <p class="lead">Veuillez remplir ce formulaire...</p>
+            <div class="text-center p-3">
+                {% comment %} <h2 id="title">Credit Card</h2> {% endcomment %}
+                <p class="h4">Formulaire Client</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-10">
@@ -20,7 +20,7 @@
                                     par rapport au T)</label>
                                 <div class="input-group mb-2">
                                     <input autofocus required name="chang_nbre_trans" class="form-control"
-                                        id="chang_nbre_trans" placeholder="2.333" type="number" step=0.01>
+                                        id="chang_nbre_trans" placeholder="Exple : 2.333" type="number" step=0.01>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -30,7 +30,7 @@
                                     mois)</label>
                                 <div class="input-group mb-4">
                                     <input required id="mont_total_trans" name="mont_total_trans" class="form-control"
-                                        placeholder="1887" type="number" step=0.01>
+                                        placeholder="Exple : 1887" type="number" step=0.01>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                                     crédit</label>
                                 <div class="input-group mb-4">
                                     <input required id="solde_renouv_total" name="solde_renouv_total"
-                                        class="form-control" placeholder="864" type="number" step=0.01>
+                                        class="form-control" placeholder="Exple : 864" type="number" step=0.01>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -48,7 +48,7 @@
                                     client</label>
                                 <div class="input-group mb-4">
                                     <input required id="nbre_total_prod" name="nbre_total_prod" class="form-control"
-                                        placeholder="4" type="number" step=0.01>
+                                        placeholder="Exple : 4" type="number" step=0.01>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +58,7 @@
                                     mois)</label>
                                 <div class="input-group mb-4">
                                     <input required id="nbre_total_trans" name="nbre_total_trans" class="form-control"
-                                        placeholder="20" type="number" step=0.01>
+                                        placeholder="Exple : 20" type="number" step=0.01>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -66,7 +66,7 @@
                                     mois</label>
                                 <div class="input-group mb-4">
                                     <input required id="nbre_contac" name="nbre_contact_12" class="form-control"
-                                        placeholder="2" type="number" step=0.01>
+                                        placeholder="Exple : 2" type="number" step=0.01>
                                 </div>
                             </div>
                         </div>
@@ -76,15 +76,15 @@
                                     rapport T1)</label>
                                 <div class="input-group mb-4">
                                     <input required id="chang_mont_trans" name="chang_mont_trans" class="form-control"
-                                        placeholder="2.594" type="number" step=0.01>
+                                        placeholder="Exple : 2.594" type="number" step=0.01>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <label for="subject" class="form-label">Nom et Prénom du Client</label>
+                                {% comment %} <label for="subject" class="form-label">Nom et Prénom du Client</label>
                                 <div class="input-group mb-4">
                                     <input id="nom_prenom" name="nom_prenom" class="form-control"
                                         placeholder="kevin KONE" type="text">
-                                </div>
+                                </div> {% endcomment %}
                             </div>
                         </div>
                         <div class="mb-4 text-center lg">

@@ -1,31 +1,54 @@
 {% extends '../layouts/layout.html' %}
 {% block title %}Machine Leaning Scoring App{% endblock title %}
 {% block main %}
-    <div class="container-fluid py-5 mt-5">
-        <div class="bg-light col-md-5 p-4 ms-5">
-            <div class="text-start">
+        <div class="bg-light p-4 rounded-3 col-md-7 position-absolute top-50 start-50 translate-middle">
+            <div class="row">
+             <div class="text-start justify-content-center align-items-center">
                 <h1 id="title">Credit Card Churn</h1>
-                <div class="text-muted">
-                    <ul>
-                        <li><span class="fw-b">Credit Card Churn est une application qui permet de determiner si un client va se 
-                        désabonné du service de carte de crédit en fonction des ces activité du mois précédent.</span>
-                        </li>
-                        <li>
-
-                        </li>
-                    </ul>
-                      
-                  
+                <div class="text-muted mt-5 mb-5">
+                    <div class="row">
+                            <div class="col-md-1"><i class="bi bi-check-circle-fill text-success"></i></div>
+                            <div class="col-md-11">
+                               <span class="fw-bold">Credit Card Churn</span> est une application qui permet de savoir si un client abonné à 
+                               un service de Carte de Crédit va se désabonner ou pas.
+                               L'application a deux fonctionnalités majeures, la prédiction 
+                               Unique et la prédiction à partir de la base de données des clients.
+                            </div>
+                    </div>
+                </div>
+                 <div class="text-muted mt-5 mb-5">
+                    <div class="row">
+                            <div class="col-md-1"><i class="bi bi-check-circle-fill text-success"></i></div>
+                            <div class="col-md-11">
+                                <span class="fw-bold">
+                                    La prédiction unique,
+                                </span> 
+                                elle consiste à entrer les informations d'un client dans un formulaire de 7 champs
+                                 et voir le résultat après la validation. 
+                            </div>
+                    </div>
+                </div>
+                <div class="text-muted mt-5 mb-5">
+                    <div class="row">
+                            <div class="col-md-1"><i class="bi bi-check-circle-fill text-success"></i></div>
+                            <div class="col-md-11">
+                                <span class="fw-bold">
+                                    La prédiction multiple 
+                                </span> 
+                                ou la prédiction à partir de la base de données des clients. 
+                                Elle consiste à entrer le nombre de client dont on souhaite voir le resultat et ensuite voir le résultat.
+                            </div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-4">
+            </div>
+            <div class="row col-md-7">
+                <div class="col-md-5">
                  <a class="btn btn-secondary btn-outline" href="/single_test">Prédiction Unique</a>
                 </div>
-                <div class="col-md-5">
+                <div class="col-md-6">
                  <a class="btn btn-secondary btn-outline" href="/db_test">Prédiction Multiple</a>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock main %}

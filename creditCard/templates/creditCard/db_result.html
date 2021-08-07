@@ -3,48 +3,38 @@
 Resultat
 {% endblock title %}
 {% block main %}
-    <div class="container-fluid bg-light">
+    <div class="vh-100">
         <div class="text-center my-4">
             <h2>Tableau de D'observation des prédictions</h2>
         </div>
-       <div class='row'>
-         <div class="col-md-10">
-         <table id="result-table" class="table table-bordered me-5">
-        <thead>
-            <tr>
-              {% for col  in cols %}
-                <th> {{col}} </th>
-              {% endfor %}
-                {% comment %} <th>total_trans_amt</th>
-                <th>total_revolving_bal</th>
-                <th>total_relationship_count</th>
-                <th>total_amt_chng_q4_q1</th>
-                <th>total_trans_ct</th>
-                <th>contacts_count_12_mon</th>
-                <th>attrition_flag</th>
-                <th>prediction</th> {% endcomment %}
-            </tr>
-        </thead>
-        <tbody>
-        {% for data in datas %}
-            <tr>
-                {% for df in  data %}
-                 <td>
-                 {{df}}
-                 </td>
+     <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-light">
+                <tr>
+                {% for col  in cols %}
+                    <th> {{col}} </th>
                 {% endfor %}
-            </tr>
-        {% endfor %}
-        </tbody>
+                </tr>
+            </thead>
+            <tbody>
+            {% for data in datas %}
+                <tr>
+                    {% for df in  data %}
+                    <td>
+                    {% if  df == "Existing Customer" %}
+                        <i class="bi bi-person-check-fill text-success"></i>
+                    {% elif df == "Attrited Customer" %}
+                        <i class="bi bi-person-x-fill text-danger"></i>
+                        {% else %}
+                        {{df}}
+                    {% endif %}
+                    </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
         </table>
-         </div>
-       </div>
+    </div>
     </div>
 {% endblock main %}
-{% block script %}
-<script>
-$(document).ready(function() {
-    $('#result-table').DataTable();
-} );
-</script>
-{% endblock script %}
+
