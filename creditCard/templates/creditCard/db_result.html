@@ -5,10 +5,10 @@ Resultat
 {% block main %}
     <div class="vh-100">
         <div class="text-center my-4">
-            <h2>Tableau de D'observation des prédictions</h2>
+            <h2>Tableau d'observation des prédictions</h2>
         </div>
      <div class="table-responsive">
-        <table class="table table-bordered">
+        <table id="db_table" class="table table-bordered" style="width:100%">
             <thead class="table-light">
                 <tr>
                 {% for col  in cols %}
@@ -37,4 +37,11 @@ Resultat
     </div>
     </div>
 {% endblock main %}
+{% block script %}
+<script>
+  $(document).ready( function () {
+    $('#db_table').DataTable();
+} );
+</script>
+{% endblock script %}
 
