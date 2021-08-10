@@ -1,3 +1,4 @@
+from CardCreditApp.settings import BASE_DIR
 from django.http.response import HttpResponse
 from django.shortcuts import render
 import numpy as np
@@ -5,8 +6,9 @@ import pandas as pd
 from pickle import load
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.preprocessing import RobustScaler
-import math
+import os
 from .models import Clients
+from django.core.files.storage import FileSystemStorage
 
 
 col = ['Total_Ct_Chng_Q4_Q1','Total_Trans_Amt','Total_Revolving_Bal','Total_Relationship_Count','Total_Amt_Chng_Q4_Q1','Total_Trans_Ct','Contacts_Count_12_mon']
@@ -79,9 +81,31 @@ def db_result(request):
     
     data['prediction'] = np.where(predict == 0,'Existing Customer','Attrited Customer')
     data = data.drop('id', axis=1)
-    cols = data.columns
     datas = data.values
     # return HttpResponse(data.to_html())
-    contexts = {'datas':datas, 'cols':cols}
+    contexts = {'datas':datas,'comeFrom':'db_result','txt':"Tableau d'observation des prédictions"}
     return render(request, 'creditCard/db_result.html', context=contexts ) 
     
+def load_file(request):
+    return render(request, 'creditCard/load_file.html')
+
+def save_file(request):
+    if request.method == 'POST':
+        file = request.FILES.get('file')
+        fss = FileSystemStorage()
+        filename = fss.save(file.name, file)
+        url = fss.url(filename)
+        _,file_ext = os.path.splitext(file.name)
+        if file_ext == ".csv":
+            data = pd.read_csv(f'media/{filename}', sep=',',na_values="Unknow")
+        elif file_ext == '.xcl':
+            data = pd.read_excel(f'media/{filename}')
+        elif file_ext == '.txt':
+            data = pd.read_table(f'media/{filename}')
+        else:
+            data = None
+        
+    data = data.drop('id', axis=1)
+    datas = data.values
+    contexts = {'datas':datas,'comeFrom':'load_file' ,'txt':"Contenu du Fichier Charger"}
+    return render(request, 'creditCard/db_result.html', context=contexts)

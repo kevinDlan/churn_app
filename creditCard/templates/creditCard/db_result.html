@@ -5,15 +5,24 @@ Resultat
 {% block main %}
     <div class="vh-100">
         <div class="text-center my-4">
-            <h2>Tableau d'observation des prédictions</h2>
+            <h2>{{txt}}</h2>
         </div>
-     <div class="table-responsive">
-        <table id="db_table" class="table table-bordered" style="width:100%">
+     <div class="table-responsive" style="height: 70%;">
+        <table id="db_table" class="table table-bordered">
             <thead class="table-light">
                 <tr>
-                {% for col  in cols %}
-                    <th> {{col}} </th>
-                {% endfor %}
+                    <th class="th">Changement du nombre de transactions (T4 par rapport au T1)</th>
+                    <th class="th">Montant total de la transaction (12 derniers mois)</th>
+                    <th class="th">Solde renouvelable total sur la carte de crédit</th>
+                    <th class="th">Nombre total de produits détenus par le client</th>
+                    <th class="th">Changement du montant de la transaction (T4 par rapport au T1)</th>
+                    <th class="th">Nombre total de transactions (12 derniers mois)</th>
+                    <th class="th">Nombre de contacts au cours des 12 derniers mois</th>
+                    <th class="th">Status Réel du client</th>
+                    {% if comeFrom == "db_result" %}
+                     <th class="th">Prédiction</th>
+                    {% endif %}
+
                 </tr>
             </thead>
             <tbody>
