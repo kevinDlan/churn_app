@@ -10,3 +10,4 @@ $("#submit").click(function(){
     // $("#loader").addClass("");
   }
 });
+

@@ -11,4 +11,5 @@ urlpatterns = [
     path('db_result/', views.db_result, name = 'db_result'),
     path('load_file/', views.load_file, name = 'load_file'),
     path('save_file/', views.save_file, name = 'save_file'),
+    path('predict_file_data/', views.predict_file_data, name = 'predict_file_data'),
 ]

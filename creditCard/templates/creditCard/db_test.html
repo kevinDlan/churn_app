@@ -10,10 +10,10 @@
                 <div class="col-lg-8">
                     <!-- App form -->
                     <form action="/db_result/" method="POST" class="row">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <div class="col-md-8">
                             {% comment %} <label for="client_val">Nombre client</label>    {% endcomment %}
-                            <input name = "nbre_client" type="number" min="10" class="form-control" id="client" placeholder="nombre client">
+                            <input autofocus name = "nbre_client" type="number" min="10" class="form-control" id="client" placeholder="nombre client">
                         </div>
                         <div class="col-md-4">
                             <button type="submit" class="btn btn-secondary mb-3">Valider</button>

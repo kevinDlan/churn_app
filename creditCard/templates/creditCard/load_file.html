@@ -1,24 +1,205 @@
 {% extends '../layouts/layout.html' %}
 {% block title %}Machine Leaning Scoring App{% endblock title %}
 {% block main %}
-<div class="bg-light p-4 rounded-3 col-9 col-lg-4 position-absolute top-50 start-50 translate-middle">
+  <div class="row p-1">
+      <div class="bg-light p-2 mt-2 rounded-3 col-md-3">
             <div class="text-center">
                 <p class="lead">Charger le fichier</p>
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <!-- App form -->
-                    <form action="{% url 'save_file' %}" method="POST" enctype="multipart/form-data">
+                    <!-- <form action="{% url 'save_file' %}" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
                         <div class="col-md-12">
-                            <label for="formFile" class="form-label">Fichier requit : <span class='fw-bold'>.csv,.xcl,.txt</span></label>
-                        <input class="form-control" type="file" name="file" accept=".csv,.txt,.xcl">
+                            <label for="formFile" class="form-label">Fichier requis : <span class='fw-bold'>.csv,.xcl,.txt</span></label>
+                        <input class="form-control" type="file" name="file" accept=".csv,.txt,.xcl" required>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <button type="submit" class="btn btn-secondary mb-3">Valider</button>
+                            <button type="submit" class="btn btn-secondary mb-3">
+                            Valider
+                            <span id="loader" class="bi bi-check-circle me-2" role="status"
+                             aria-hidden="true"></span>
+                            </button>
                         </div>
-                    </form>
+                    </form> -->
+                    <div class="drag-area p-5">
+                      <div class="text-center fs-1"><i class="bi bi-cloud-arrow-up-fill"></i></div>
+                      <p class="text-center">Glissez-déposez pour télécharger le fichier</p>
+                      <span>Fichier requis : .csv, .txt, .xcl</span>
+                      <button id="chooseFile" class="btn btn-secondary mt-2">Choisir un fichier...</button>
+                      <form id="file_form" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <input id="input" type="file" hidden required>
+                        <button id="submit_btn" class="btn btn-secondary mt-4" type="submit" hidden>Preview ...</button>
+                      </form>
+                    </div>
+                    <!-- <input type="file" class="filepond"> -->
                 </div>
+                <button id="predict" class="btn btn-secondary col-md-6 mt-4" id="predict" hidden>
+                      predire
+                </button>
             </div>
-</div>
+       </div>
+       <div id='table' class="col-lg-9 table-responsive rounded-1 bg-light mt-2" style="height:50%;" hidden>
+          <table id="db_table" class="table table-bordered display" style="width:100%">
+            <div class="position-absolute top-50 start-50 translate-middle ms-5">
+                <div class="spinner-border" role="status">
+                </div><br/>
+                <span class="text-center text-info">Chargement...</span>
+            </div>
+          </table>
+       </div>
+  </div>
 {% endblock %}
+  {% block js %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var tablesID = $('db_table');
+        $('#file_form').on('submit', function(e)
+        {
+            e.preventDefault();
+            $('#table').removeAttr('hidden');
+            var form_data = new FormData(this);
+            form_data.append('file', $("input[id^='input']")[0].files[0])
+            $.ajax({
+                url: "{% url 'save_file' %}",
+                method:"POST",
+                data:form_data,
+                dataType:'JSON',
+                processData:false,
+                contentType:false,
+                success:function(res)
+                {
+                    var content = '<thead class="table-light"><tr><th></th>'
+                    for(let i = 0 ; i<res.columns.length;i++)
+                    {
+                       content += '<th>'+res.columns[i]+'</th>';
+                    }
+                    content +='</thead></tr><tbody>'
+                    
+                    res.data.forEach(function(data,i)
+                        {
+                           content += '<tr><td></td>'
+                           data.forEach(function(d,i)
+                           {
+                              content +='<td>'+d+'</td>'
+                           })
+                         content +='</tr>'
+                        }
+                    );
+                    content += '</tbody>'
+                    $('#db_table').append(content);
+                    $('#db_table').DataTable({
+                         columnDefs: [
+                            {
+                                orderable: false,
+                                className: "select-checkbox",
+                                targets: 0,
+                            },
+                            ],
+                          select: {
+                              style: "multi",
+                              selector: "td:first-child",
+                              items:'cell',
+                        },
+                    });
+
+                    // $('#predict').removeAttribute('hidden');
+                    // if(res.data.length > 0)
+                    // { 
+                    //     df = JSON.stringify({data:res.data})
+                    //     $('#table').removeAttr('hidden');
+                    //     $('#datatable').DataTable({
+                    //         data : df,
+                    //         columns : res.cols,
+                    //     })
+                    // }
+                },
+                error:function(res){
+                    console.log(res)
+                }
+            })
+        });
+
+        // var data = $('#db_table').row({selected:true});
+        // console.log(data)
+        // var table = $('#db_table').DataTable();
+        // $('#predict').click(
+        //     function(){
+        //         var data = $('#db_table').DataTable().rows({selected:true}).data().toArray();
+        //         console.log(data);
+        //     }
+        // )
+
+        var df = Array();
+        $('#db_table').on('click','tr', function(){ 
+           var attr = $('#predict').attr('hidden');
+
+           if(typeof attr !== undefined)
+           {
+              $('#predict').removeAttr('hidden');
+           }
+           var currentRow = $(this).closest('tr');
+           var row = Array();
+           for(let i =1; i < 10; i++)
+           {
+             row.push(currentRow.find('td:eq('+i+')').text());
+           }
+           df.push(row);
+        //    console.log(JSON.stringify(df))
+        });
+
+
+        $('#predict').on('click', function()
+        {
+            var pred_data = new FormData();
+            pred_data.append('select',JSON.stringify(df))
+            
+            // var selected_row = JSON.stringify(df)
+            $('#file_form').trigger('reset');
+          $.ajax({
+                url: "{% url 'predict_file_data' %}",
+                method:"POST",
+                data:pred_data,
+                // dataType:'json',
+                processData:false,
+                contentType:false,
+                success: function(response)
+                {
+                   $('#table').empty()
+                   var content ='<table id="db_table" class="table table-bordered display" style="width:100%">\
+                                <thead class="table-light">\
+                                    <tr>\
+                                        <th class="th">Changement du nombre de transactions (T4 par rapport au T1)</th>\
+                                        <th class="th">Montant total de la transaction (12 derniers mois)</th>\
+                                        <th class="th">Solde renouvelable total sur la carte de crédit</th>\
+                                        <th class="th">Nombre total de produits détenus par le client</th>\
+                                        <th class="th">Changement du montant de la transaction (T4 par rapport au T1)</th>\
+                                        <th class="th">Nombre total de transactions (12 derniers mois)</th>\
+                                        <th class="th">Nombre de contacts au cours des 12 derniers mois</th>\
+                                        <th class="th">Status Réel du client</th>\
+                                        <th class="th">Prédiction</th>\
+                                    </tr>\
+                                </thead>\
+                                <tbody>\n' ;
+                    response.data.forEach(function(data,i)
+                    {
+                     content += '<tr>';
+                        data.forEach(function(dt,i)
+                        {
+                            content += '<td>'+dt+'</td>';
+                        });
+                     content += '</tr>';
+                    }
+                    );
+                   content += '</tbody></table>';
+                   $('#table').append(content);
+                },
+                error: function(){
+                }
+          })
+        });
+      })
+   </script> 
+  {% endblock js %}

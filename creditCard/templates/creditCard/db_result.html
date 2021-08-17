@@ -8,9 +8,10 @@ Resultat
             <h2>{{txt}}</h2>
         </div>
      <div class="table-responsive" style="height: 70%;">
-        <table id="db_table" class="table table-bordered">
+        <table id="db_table" class="table table-bordered display" style="width:100%">
             <thead class="table-light">
                 <tr>
+                    <th></th>
                     <th class="th">Changement du nombre de transactions (T4 par rapport au T1)</th>
                     <th class="th">Montant total de la transaction (12 derniers mois)</th>
                     <th class="th">Solde renouvelable total sur la carte de crédit</th>
@@ -22,12 +23,12 @@ Resultat
                     {% if comeFrom == "db_result" %}
                      <th class="th">Prédiction</th>
                     {% endif %}
-
                 </tr>
             </thead>
             <tbody>
             {% for data in datas %}
                 <tr>
+                    <td></td>
                     {% for df in  data %}
                     <td>
                     {% if  df == "Existing Customer" %}
@@ -46,11 +47,25 @@ Resultat
     </div>
     </div>
 {% endblock main %}
-{% block script %}
+{% block js %}
 <script>
-  $(document).ready( function () {
-    $('#db_table').DataTable();
-} );
+    $(document).ready(function () {
+    $("#db_table").DataTable({
+        columnDefs: [
+        {
+            // orderable: true,
+            className: "select-checkbox",
+            targets: 0,
+        },
+        ],
+        select: {
+        style: "multi",
+        selector: "td:first-child",
+        items:'cell',
+        },
+        order: [[1, "asc"]],
+    });
+    });
 </script>
-{% endblock script %}
+{% endblock js %}
 
